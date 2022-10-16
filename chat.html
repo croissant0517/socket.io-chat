@@ -62,32 +62,41 @@
     </form>
     <script src="/socket.io/socket.io.js"></script>
     <script>
-      var socket = io();
-
+      const params = new Proxy(new URLSearchParams(window.location.search), {
+        get: (searchParams, prop) => searchParams.get(prop),
+      });
+      let room = params.room;
+      var socket = io({
+        auth: {
+          room,
+        },
+      });
       var messages = document.getElementById("messages");
       var form = document.getElementById("form");
       var input = document.getElementById("input");
 
+      function displayMessage(message) {
+        var item = document.createElement("li");
+        item.textContent = message;
+        messages.appendChild(item);
+        window.scrollTo(0, document.body.scrollHeight);
+      }
+
       form.addEventListener("submit", function (e) {
         e.preventDefault();
         if (input.value) {
-          socket.emit("chat message", input.value);
+          socket.emit("chat message", input.value, room);
+          displayMessage(input.value);
           input.value = "";
         }
       });
 
-      // socket.on("connect", function () {
-      //   var item = document.createElement("li");
-      //   item.textContent = `Hi ! ${socket.id}`;
-      //   messages.appendChild(item);
-      //   window.scrollTo(0, document.body.scrollHeight);
-      // });
+      socket.on("connect", function () {
+        displayMessage("Success Join!");
+      });
 
       socket.on("receive message", function (msg) {
-        var item = document.createElement("li");
-        item.textContent = msg;
-        messages.appendChild(item);
-        window.scrollTo(0, document.body.scrollHeight);
+        displayMessage(msg);
       });
     </script>
   </body>

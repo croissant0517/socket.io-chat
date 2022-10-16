@@ -13,7 +13,7 @@
       crossorigin="anonymous"
     />
 
-    <title>Hello, world!</title>
+    <title>Socket.IO chat</title>
   </head>
   <body>
     <h1>Hi! Welcome to chat!</h1>
@@ -56,25 +56,28 @@
             ></button>
           </div>
           <div class="modal-body">
-            <form>
+            <form id="form" action="">
               <div class="mb-3">
                 <label for="recipient-name" class="col-form-label"
                   >Room Id:</label
                 >
-                <input type="text" class="form-control" id="recipient-name" />
+                <input type="text" class="form-control" id="room-id" />
+              </div>
+              <div class="d-flex justify-content-end">
+                <div>
+                  <button
+                    type="button"
+                    class="btn btn-secondary"
+                    data-bs-dismiss="modal"
+                  >
+                    Close
+                  </button>
+                  <button id="join-room" type="button" class="btn btn-primary">
+                    Join Room
+                  </button>
+                </div>
               </div>
             </form>
-          </div>
-          <div class="modal-footer">
-            <button
-              type="button"
-              class="btn btn-secondary"
-              data-bs-dismiss="modal"
-            >
-              Close
-            </button>
-            <button type="button" class="btn btn-primary">Join Room</button>
-            <button type="button" class="btn btn-primary">Create Room</button>
           </div>
         </div>
       </div>
@@ -84,6 +87,25 @@
       integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
       crossorigin="anonymous"
     ></script>
-    <script></script>
+    <script>
+      var form = document.getElementById("form");
+      var roomId = document.getElementById("room-id");
+      var joinRoomButton = document.getElementById("join-room");
+
+      form.addEventListener("submit", function (e) {
+        e.preventDefault();
+        if (roomId.value) {
+          window.location.href = `/chat?room=${roomId.value}`;
+          roomId.value = "";
+        }
+      });
+
+      joinRoomButton.addEventListener("click", function () {
+        if (roomId.value) {
+          window.location.href = `/chat?room=${roomId.value}`;
+          roomId.value = "";
+        }
+      });
+    </script>
   </body>
 </html>

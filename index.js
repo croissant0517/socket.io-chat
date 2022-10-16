@@ -20,16 +20,34 @@ app.get("/chat", (req, res) => {
   res.sendFile(__dirname + "/chat.html");
 });
 
+io.use((socket, next) => {
+  const room = socket.handshake.auth.room;
+  socket.room = room;
+  next();
+});
+
 // when client connected
 io.on("connection", (socket) => {
-  console.log(socket.id);
-  console.log("a user connected");
-  socket.broadcast.emit("receive message", `${socket.id} join chat!`);
-  io.emit("receive message", "Hi");
+  console.log(`${socket.id} connected`);
+  if (socket.room) {
+    socket.join(socket.room);
+    socket.in(socket.room).emit("receive message", `${socket.id} join Room!`);
+  } else {
+    socket.join("Piblic Room");
+    socket.to("Piblic Room").emit("receive message", `${socket.id} join Room!`);
+  }
 
   // when client disconnected
   socket.on("disconnect", () => {
-    console.log("user disconnected");
+    if (socket.room) {
+      socket
+        .to(socket.room)
+        .emit("receive message", `${socket.id} leave chat!`);
+    } else {
+      socket
+        .to("Piblic Room")
+        .emit("receive message", `${socket.id} leave chat!`);
+    }
   });
 
   // when client send a message
@@ -38,22 +56,17 @@ io.on("connection", (socket) => {
     console.log("message: " + msg);
 
     // send message to every client
-    io.emit("receive message", msg);
+    // io.emit("receive message", msg);
+    if (socket.room) {
+      socket.to(socket.room).emit("receive message", msg);
+    } else {
+      socket.to("Piblic Room").emit("receive message", msg);
+    }
 
     // send message to every client except the client who sended message
     // socket.broadcast.emit("receive message", msg);
   });
 });
-
-// io.on("connection", (socket) => {
-//   socket.broadcast.emit("hi");
-// });
-
-// io.on("connection", (socket) => {
-//   socket.on("chat message", (msg) => {
-//     io.emit("receive message", msg);
-//   });
-// });
 
 server.listen(port, () => {
   console.log(`listening on ${port}`);
