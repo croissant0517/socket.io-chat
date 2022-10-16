@@ -4,7 +4,7 @@ const http = require("http");
 const server = http.createServer(app);
 const port = process.env.PORT | 3000;
 const { Server } = require("socket.io");
-const { instrument } = require("@socket.io/admin-ui");
+// const { instrument } = require("@socket.io/admin-ui");
 const io = new Server(server, {
   cors: {
     origin: ["https://admin.socket.io"],
@@ -72,4 +72,4 @@ server.listen(port, () => {
   console.log(`listening on ${port}`);
 });
 
-instrument(io, { auth: false });
+// instrument(io, { auth: false });
