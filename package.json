@@ -4,11 +4,14 @@
   "description": "my first socket.io app",
   "dependencies": {
     "@socket.io/admin-ui": "^0.5.1",
+    "bufferutil": "^4.0.6",
     "express": "^4.18.2",
-    "socket.io": "^4.5.2"
+    "socket.io": "^4.5.2",
+    "utf-8-validate": "^5.0.9",
+    "ws": "^8.9.0"
   },
   "scripts": {
-    "start": "nodemon index.js"
+    "start": "node index.js"
   },
   "devDependencies": {
     "nodemon": "^2.0.20"
