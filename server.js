@@ -68,8 +68,8 @@ io.on("connection", (socket) => {
   });
 });
 
-server.listen(port, () => {
-  console.log(`listening on ${port}`);
+server.listen(process.env.PORT | 3000, () => {
+  console.log(`listening on ${process.env.PORT | 3000}`);
 });
 
 // instrument(io, { auth: false });
