@@ -72,4 +72,4 @@ server.listen(process.env.PORT | 3000, () => {
   console.log(`listening on ${process.env.PORT | 3000}`);
 });
 
-instrument(io, { auth: false });
+// instrument(io, { auth: false });
