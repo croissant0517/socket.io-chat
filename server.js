@@ -2,7 +2,7 @@ const express = require("express");
 const app = express();
 const http = require("http");
 const server = http.createServer(app);
-const port = process.env.PORT | 3000;
+const PORT = process.env.PORT | 3000;
 const { Server } = require("socket.io");
 const { instrument } = require("@socket.io/admin-ui");
 const io = new Server(server, {
@@ -68,8 +68,8 @@ io.on("connection", (socket) => {
   });
 });
 
-server.listen(process.env.PORT | 3000, () => {
-  console.log(`listening on ${process.env.PORT | 3000}`);
+server.listen(PORT, () => {
+  console.log(`listening on ${PORT}`);
 });
 
 // instrument(io, { auth: false });
