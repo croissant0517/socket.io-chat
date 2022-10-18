@@ -2,7 +2,7 @@
   "name": "socket-io",
   "version": "0.0.1",
   "description": "my first socket.io app",
-  "main": "server.js",
+  "main": "index.js",
   "dependencies": {
     "@socket.io/admin-ui": "^0.5.1",
     "bufferutil": "^4.0.6",
@@ -13,7 +13,7 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+    "start": "node index.js"
   },
   "keywords": [],
   "author": "",
