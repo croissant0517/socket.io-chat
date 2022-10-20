@@ -2,7 +2,7 @@ const express = require("express");
 const app = express();
 // const http = require("http");
 // const server = http.createServer(app);
-const PORT = process.env.PORT | 3000;
+const PORT = process.env.PORT | 9000;
 const { Server } = require("socket.io");
 const { instrument } = require("@socket.io/admin-ui");
 const server = app.listen(PORT, () => {
@@ -17,11 +17,11 @@ const io = new Server(server, {
 });
 
 app.get("/", (req, res) => {
-  res.sendFile(__dirname + "/index.html");
+  res.sendFile(__dirname + "/public/index.html");
 });
 
 app.get("/chat", (req, res) => {
-  res.sendFile(__dirname + "/chat.html");
+  res.sendFile(__dirname + "/public/chat.html");
 });
 
 io.use((socket, next) => {
@@ -72,4 +72,4 @@ io.on("connection", (socket) => {
   });
 });
 
-// instrument(io, { auth: false });
+instrument(io, { auth: false });
