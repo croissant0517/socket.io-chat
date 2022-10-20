@@ -12,11 +12,10 @@
   "license": "ISC",
   "dependencies": {
     "@socket.io/admin-ui": "^0.5.1",
-    "bufferutil": "^4.0.6",
+    "cors": "^2.8.5",
     "express": "^4.18.2",
-    "socket.io": "^4.5.2",
-    "utf-8-validate": "^5.0.9",
-    "ws": "^8.9.0"
+    "node-fetch": "^2.6.7",
+    "socket.io": "^4.5.3"
   },
   "devDependencies": {
     "nodemon": "^2.0.20"
